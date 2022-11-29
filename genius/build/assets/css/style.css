@@ -1,7 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Nova+Square&display=swap');
+
 * {
   padding: 0;
   margin: 0;
   transition: 0.3s ease-out all;
+  align-content: center;
+  justify-content: center;
+  font-family: 'Nova Square', cursive;
 }
 
 body {
@@ -9,49 +14,79 @@ body {
 }
 
 .genius {
-  width: 400px;
-  height: 400px;
+  width: 100%;
+  max-width: 400px;
   position: relative;
   display: inline-block;
 }
 
 .genius__item {
   width: 50%;
-  height: 50%;
   float: left;
-  border: 10px solid transparent;
   box-sizing: border-box;
 }
 
 .genius .genius__item--0 {
-  background-color: red;
+  background-color: rgb(165, 0, 0);
   border-radius: 100% 0 0 0;
+  border: 0.25em solid black;
+  border-top: 0.9em solid black;
+  border-left: 0.9em solid black;
 }
+
+.genius .genius__item--0:hover, .genius .genius__item--0:active  {
+    background-color: rgb(255, 0, 0);
+    }
 
 .genius .genius__item--1 {
-  background-color: green;
-  border-radius: 0 100% 0 0 ;
+  background-color: rgb(0, 105, 0);
+  border-radius: 0 100% 0 0;
+  border: 0.25em solid black;
+  border-top: 0.9em solid black;
+  border-right: 0.9em solid black;
 }
+
+.genius .genius__item--1:hover, .genius .genius__item--1:active  {
+    background-color: rgb(0, 165, 0);
+    }
 
 .genius .genius__item--2 {
-  background-color: blue;
-  border-radius:  0 0 0 100%;
+  background-color: rgb(0, 0, 165);
+  border-radius: 0 0 0 100%;
+  border: 0.25em solid black;
+  border-bottom: 0.9em solid black;
+  border-left: 0.9em solid black;
 }
 
+.genius .genius__item--2:hover, .genius .genius__item--2:active  {
+    background-color: blue
+    }
+
 .genius .genius__item--3 {
-  background-color: yellow;
-  border-radius: 0 0  100% 0;
+  background-color: rgb(195, 195, 0);
+  border-radius: 0 0 100% 0;
+  border: 0.25em solid black;
+  border-bottom: 0.9em solid black;
+  border-right: 0.9em solid black;
 }
+
+.genius .genius__item--3:hover, .genius .genius__item--3:active  {
+    background-color: yellow;
+    }
 
 .genius .genius__item--4 {
   width: 40%;
-  height: 40%;
   background-color: black;
   border-radius: 100%;
+  color: white;
+  font-size: 2em;
+  align-items: center;
+  display: flex;
+  box-sizing: border-box;
 }
 
 .genius .genius__item--middle {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 30%;
+  top: 30%;
 }

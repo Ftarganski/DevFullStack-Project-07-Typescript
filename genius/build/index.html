@@ -11,12 +11,14 @@
   <body>
    <!-- Block__Element--Modifier -->
     <div class="genius">
-      <div class="genius__item genius__item--0"></div>
-      <div class="genius__item genius__item--1"></div>
-      <div class="genius__item genius__item--2"></div>
-      <div class="genius__item genius__item--3"></div>
-      <div class="genius__item genius__item--4 genius__item--middle"></div>
+      <div type="button" class="genius__item genius__item--0 genius__item--clickable" id="part-0" source="0"></div>
+      <div type="button" class="genius__item genius__item--1 genius__item--clickable" id="part-1" source="1"></div>
+      <div type="button" class="genius__item genius__item--2 genius__item--clickable" id="part-2" source="2"></div>
+      <div type="button" class="genius__item genius__item--3 genius__item--clickable" id="part-3" source="3"></div>
+      <div type="button" onclick="startGame()" class="genius__item genius__item--4 genius__item--middle" id="part-4">START</div>
     </div>
+
+    <div id="genius__score">GENIUS</div>
 
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/script.js"></script>
