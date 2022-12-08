@@ -11,7 +11,7 @@ const defineHeight = () => {
 
 const startGame = () => {
     if (!jogoIniciado) {
-        alert("Go!");
+        alert(`Let´s Go!`);
         jogoIniciado = true;
         if (btnStart) {
             btnStart.disabled = true;
