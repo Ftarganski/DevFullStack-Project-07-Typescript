@@ -5,22 +5,58 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
-   <!-- Block__Element--Modifier -->
+    <!-- Block__Element--Modifier -->
     <div class="genius">
-      <div type="button" class="genius__item genius__item--0 genius__item--clickable" id="part-0" source="0"></div>
-      <div type="button" class="genius__item genius__item--1 genius__item--clickable" id="part-1" source="1"></div>
-      <div type="button" class="genius__item genius__item--2 genius__item--clickable" id="part-2" source="2"></div>
-      <div type="button" class="genius__item genius__item--3 genius__item--clickable" id="part-3" source="3"></div>
-      <div type="button" onclick="startGame()" class="genius__item genius__item--4 genius__item--middle" id="part-4">START</div>
+      <div
+        type="button"
+        class="genius__item genius__item--0 genius__item--clickable"
+        id="part-0"
+        source="0"
+      ></div>
+      <div
+        type="button"
+        class="genius__item genius__item--1 genius__item--clickable"
+        id="part-1"
+        source="1"
+      ></div>
+      <div
+        type="button"
+        class="genius__item genius__item--2 genius__item--clickable"
+        id="part-2"
+        source="2"
+      ></div>
+      <div
+        type="button"
+        class="genius__item genius__item--3 genius__item--clickable"
+        id="part-3"
+        source="3"
+      ></div>
+      <div
+        type="button"
+        onclick="startGame()"
+        class="genius__item genius__item--4 genius__item--middle"
+        id="part-4"
+      >
+        START
+      </div>
     </div>
 
-    <div id="genius__score">GENIUS</div>
+    <div id="genius__score">0</div>
 
-    <script src="./assets/js/bootstrap.min.js"></script>
+
+    <div id="area__error" style="display: none;">
+      <div>
+        You got the sequence wrong! Try again!
+      </div>
+      <div>
+          <button type="button" onclick="restart()">Try again</button>
+      </div>
+  </div>
+
+  
     <script src="./assets/js/script.js"></script>
   </body>
 </html>

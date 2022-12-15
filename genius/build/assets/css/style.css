@@ -11,6 +11,7 @@
 
 body {
   text-align: center;
+  background-color: rgb(255, 255, 255);
 }
 
 .genius {
@@ -34,8 +35,8 @@ body {
   border-left: 0.9em solid black;
 }
 
-.genius .genius__item--0:hover, .genius .genius__item--0:active  {
-    background-color: rgb(255, 0, 0);
+.genius .genius__item--0:hover, .genius .genius__item--0:active, .genius__item--0__active {
+    background-color: rgb(255, 0, 0)!important;
     }
 
 .genius .genius__item--1 {
@@ -43,11 +44,11 @@ body {
   border-radius: 0 100% 0 0;
   border: 0.25em solid black;
   border-top: 0.9em solid black;
-  border-right: 0.9em solid black;
+  border-right: 0.9em solid rgb(0, 0, 0);
 }
 
-.genius .genius__item--1:hover, .genius .genius__item--1:active  {
-    background-color: rgb(0, 165, 0);
+.genius .genius__item--1:hover, .genius .genius__item--1:active, .genius__item--1__active   {
+    background-color: rgb(0, 165, 0)!important;
     }
 
 .genius .genius__item--2 {
@@ -58,8 +59,8 @@ body {
   border-left: 0.9em solid black;
 }
 
-.genius .genius__item--2:hover, .genius .genius__item--2:active  {
-    background-color: blue
+.genius .genius__item--2:hover, .genius .genius__item--2:active, .genius__item--2__active   {
+    background-color: blue !important;
     }
 
 .genius .genius__item--3 {
@@ -70,8 +71,8 @@ body {
   border-right: 0.9em solid black;
 }
 
-.genius .genius__item--3:hover, .genius .genius__item--3:active  {
-    background-color: yellow;
+.genius .genius__item--3:hover, .genius .genius__item--3:active, .genius__item--3__active   {
+    background-color: yellow !important;
     }
 
 .genius .genius__item--4 {
@@ -85,8 +86,21 @@ body {
   box-sizing: border-box;
 }
 
+.genius .genius__item--4:hover, .genius .genius__item--4:active{
+  border-color: red;
+}
+
+.genius .genius__item--4:disabled, .genius .genius__item--4[disabled]:hover{
+  cursor: none;
+  color: red;
+}
+
 .genius .genius__item--middle {
   position: absolute;
   left: 30%;
   top: 30%;
+}
+
+#genius__score{
+  font-size: 1.5em;
 }
