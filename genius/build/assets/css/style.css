@@ -90,6 +90,45 @@ body {
   box-sizing: border-box;
 }
 
+#user{
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto 20px;
+}
+
+ #user input{
+  }
+
+  #ranking{
+    background-color: #333;
+    color: white;
+    position: fixed;
+    top: 0;
+    width: 200px;
+    padding: 10px;
+    z-index: 999;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+
+  #ranking h3{
+    border-bottom: 1px solid white;
+    padding: 0 0 5px 0;
+    box-sizing: border-box;
+  }
+
+  #ranking ul{
+    list-style: none;
+  }
+
+  #ranking ul li{
+    padding: 5px 0;
+    box-sizing: border-box;
+  }
+
+
+
 
 
 /* .genius .genius__item--4:hover, .genius .genius__item--4:active{

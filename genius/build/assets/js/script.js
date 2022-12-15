@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var jogoIniciado = false;
+var startedGame = false;
 const btnStart = document.getElementById('part-4');
 const parts = [
     document.getElementById('part-0'),
@@ -23,29 +23,71 @@ const sounds = [
     new Audio('../build/assets/sounds/sound3.wav'),
     new Audio('../build/assets/sounds/erro.mp3'),
 ];
+let scoreVariable = 0;
 const score = document.getElementById("genius__score");
 const areaError = document.getElementById("area__error");
+let user = "";
 let positions = [], mPositions = [];
+let ranking = [];
+const tagRanking = document.getElementById("ranking");
+const toggleRanking = () => {
+    let left = tagRanking.style.left;
+    if (left === '0px') {
+        tagRanking.style.left = '-100%';
+    }
+    else {
+        tagRanking.style.left = '0px';
+    }
+};
+const loadRanking = () => {
+    const r = window.localStorage.getItem('ranking');
+    if (r) {
+        ranking = JSON.parse(r);
+    }
+    let list = `<ul>`;
+    for (const rank of ranking) {
+        list += `
+        <li>${rank.user === "" ? "Anonymous" : rank.user} - ${rank.scoreVariable} </li>
+        `;
+    }
+    list += '<ul>';
+    tagRanking.children[1].innerHTML = list;
+};
+const updateRanking = () => {
+    ranking.push({
+        user,
+        scoreVariable
+    });
+    window.localStorage.setItem('ranking', JSON.stringify(ranking));
+};
 const configs = () => {
     parts.map((part, idx) => {
         part === null || part === void 0 ? void 0 : part.addEventListener('click', () => setPosition(idx));
     });
 };
+const alternateParts = (status) => {
+    parts.map((part) => {
+        part.disabled = status;
+    });
+};
 const startGame = () => __awaiter(void 0, void 0, void 0, function* () {
-    if (!jogoIniciado) {
-        jogoIniciado = true;
+    let userName = document.getElementById('name');
+    user = userName.value;
+    userName.value = "";
+    if (score) {
+        score.innerText = "0";
+    }
+    if (!startedGame) {
+        startedGame = true;
         if (btnStart) {
             btnStart.disabled = true;
             btnStart.innerHTML = "GAME </br> STARTED";
             btnStart.style.fontSize = "1.5em";
             btnStart.style.cursor = "none";
+            alternateParts(false);
             loadPosition();
-            parts.map((part) => {
-                part.disabled = false;
-            });
         }
     }
-    // GAME POSITION GENERATION LOGIC
 });
 const loadPosition = () => __awaiter(void 0, void 0, void 0, function* () {
     let aleatory = 0;
@@ -72,11 +114,15 @@ const setPosition = (idx) => __awaiter(void 0, void 0, void 0, function* () {
             if (areaError) {
                 areaError.style.display = "block";
             }
+            updateRanking();
+            loadRanking();
+            alternateParts(true);
         }
         else {
             if (lastPosition === positions.length - 1) {
                 setTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
                     if (score) {
+                        scoreVariable = positions.length;
                         score.innerText = positions.length;
                     }
                     yield loadPosition();
@@ -108,23 +154,14 @@ const defineHeight = () => {
         element.style.height = `${element.clientWidth}px`;
     });
 };
-const restart = () => {
-    jogoIniciado = false;
-    if (btnStart) {
-        btnStart.disabled = false;
-        btnStart.innerHTML = "START";
-        btnStart.style.fontSize = "2em";
+const restartGame = () => {
+    startedGame = false;
+    positions = [];
+    scoreVariable = 0;
+    if (areaError) {
+        areaError.style.display = "none";
     }
-};
-const lost = (bootstrap, element) => {
-    const verify = verifySentence();
-    if (!verify) {
-        const modal = new bootstrap.Modal(element, {});
-        modal.show();
-    }
-};
-const verifySentence = () => {
-    return false;
+    startGame();
 };
 defineHeight();
 window.addEventListener("resize", () => {
@@ -132,4 +169,5 @@ window.addEventListener("resize", () => {
 });
 window.addEventListener("load", () => {
     configs();
+    loadRanking();
 });

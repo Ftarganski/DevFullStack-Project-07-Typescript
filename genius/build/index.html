@@ -8,6 +8,22 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
+    <div>
+      <button onclick="toggleRanking()">Ranking</button>
+      <button onclick="toggleRanking()">Botão 2</button>
+    
+    </div>
+
+    <div id="user">
+      <label for="none">Username:</label>
+      <input type="text" id="name" />
+    </div>
+
+    <div id="ranking" style="left: -100%">
+    <h3>RANKING</h3>
+    <div></div>
+  </div>
+
     <!-- Block__Element--Modifier -->
     <div class="genius">
       <div
@@ -45,7 +61,7 @@
     <div id="area__error" style="display: none">
       <div>You got the sequence wrong! Try again!</div>
       <div>
-        <button type="button" onclick="restart()">Try again</button>
+        <button type="button" onclick="restartGame()">Start again</button>
       </div>
     </div>
 
