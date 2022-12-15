@@ -7,7 +7,6 @@ const parts = [
     document.getElementById('part-1'),
     document.getElementById('part-2'),
     document.getElementById('part-3'),
-    document.getElementById('part-4'),
 ]
 
 const sounds = [
@@ -20,13 +19,13 @@ const sounds = [
 
 const score = document.getElementById("genius__score");
 
-const areaeError = document.getElementById("area__error");
+const areaError = document.getElementById("area__error");
 
 let positions: any = [], mPositions: any = [];
 
 const configs = () => {
-    parts.map((part, idx) => {
-        part?.addEventListener('click', (event) => setPosition(event))
+    parts.map((part, idx:number) => {
+        part?.addEventListener('click', () => setPosition(idx))
     })
 }
 
@@ -39,6 +38,9 @@ const startGame = async () => {
             btnStart.style.fontSize = "1.5em";
             btnStart.style.cursor = "none";
             loadPosition();
+            parts.map((part: any) => {
+                part.disabled = false;
+            })
         }
 
     }
@@ -50,7 +52,8 @@ const loadPosition = async () => {
     if (positions.length >= 4) {
         aleatory = Math.floor(Math.random() * 4)
     } else {
-        if (positions.length > 0) {
+        if 
+        (positions.length > 0) {
             aleatory = positions[positions.length - 1] + 1;
         }
     }
@@ -59,9 +62,31 @@ const loadPosition = async () => {
     mPositions = [];
 }
 
-const setPosition = async (event: any) => {
-    let element = event.currentTarget.getAttribute(`source`);
+const setPosition = async (idx: number) => {
+    let position = idx;
+    sounds[position].play();
+    mPositions.push(position);
+  
 
+    let lastPosition = mPositions.length - 1;
+    setTimeout(async () => {
+        if (positions[lastPosition] !== mPositions[lastPosition]) {
+            sounds[4].play();
+            if (areaError) {
+                areaError.style.display = "block";
+            }
+        } else {
+            if (lastPosition === positions.length - 1) {
+                setTimeout(async () => {
+                    if (score) {
+                        score.innerText = positions.length;
+                    }
+                    await loadPosition();
+                }, 300)
+            }
+
+        }
+    }, 1000)
 }
 
 const iluminatePosition = async () => {
@@ -72,7 +97,7 @@ const iluminatePosition = async () => {
         await parts[item]?.classList.add(`genius__item--${item}__active`)
         setTimeout(async () => {
             await parts[item]?.classList.remove(`genius__item--${item}__active`)
-        }, 700)
+        }, 300)
         i++;
         if (i === positions.length) {
             clearInterval(interval);

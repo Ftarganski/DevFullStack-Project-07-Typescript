@@ -15,7 +15,6 @@ const parts = [
     document.getElementById('part-1'),
     document.getElementById('part-2'),
     document.getElementById('part-3'),
-    document.getElementById('part-4'),
 ];
 const sounds = [
     new Audio('../build/assets/sounds/sound0.wav'),
@@ -25,11 +24,11 @@ const sounds = [
     new Audio('../build/assets/sounds/erro.mp3'),
 ];
 const score = document.getElementById("genius__score");
-const areaeError = document.getElementById("area__error");
+const areaError = document.getElementById("area__error");
 let positions = [], mPositions = [];
 const configs = () => {
     parts.map((part, idx) => {
-        part === null || part === void 0 ? void 0 : part.addEventListener('click', (event) => setPosition(event));
+        part === null || part === void 0 ? void 0 : part.addEventListener('click', () => setPosition(idx));
     });
 };
 const startGame = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -41,6 +40,9 @@ const startGame = () => __awaiter(void 0, void 0, void 0, function* () {
             btnStart.style.fontSize = "1.5em";
             btnStart.style.cursor = "none";
             loadPosition();
+            parts.map((part) => {
+                part.disabled = false;
+            });
         }
     }
     // GAME POSITION GENERATION LOGIC
@@ -59,8 +61,29 @@ const loadPosition = () => __awaiter(void 0, void 0, void 0, function* () {
     yield iluminatePosition();
     mPositions = [];
 });
-const setPosition = (event) => __awaiter(void 0, void 0, void 0, function* () {
-    let element = event.currentTarget.getAttribute(`source`);
+const setPosition = (idx) => __awaiter(void 0, void 0, void 0, function* () {
+    let position = idx;
+    sounds[position].play();
+    mPositions.push(position);
+    let lastPosition = mPositions.length - 1;
+    setTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
+        if (positions[lastPosition] !== mPositions[lastPosition]) {
+            sounds[4].play();
+            if (areaError) {
+                areaError.style.display = "block";
+            }
+        }
+        else {
+            if (lastPosition === positions.length - 1) {
+                setTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
+                    if (score) {
+                        score.innerText = positions.length;
+                    }
+                    yield loadPosition();
+                }), 300);
+            }
+        }
+    }), 1000);
 });
 const iluminatePosition = () => __awaiter(void 0, void 0, void 0, function* () {
     let i = 0;
@@ -72,7 +95,7 @@ const iluminatePosition = () => __awaiter(void 0, void 0, void 0, function* () {
         setTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
             var _b;
             yield ((_b = parts[item]) === null || _b === void 0 ? void 0 : _b.classList.remove(`genius__item--${item}__active`));
-        }), 700);
+        }), 300);
         i++;
         if (i === positions.length) {
             clearInterval(interval);

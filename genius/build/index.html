@@ -14,25 +14,21 @@
         type="button"
         class="genius__item genius__item--0 genius__item--clickable"
         id="part-0"
-        source="0"
       ></div>
       <div
         type="button"
         class="genius__item genius__item--1 genius__item--clickable"
         id="part-1"
-        source="1"
       ></div>
       <div
         type="button"
         class="genius__item genius__item--2 genius__item--clickable"
         id="part-2"
-        source="2"
       ></div>
       <div
         type="button"
         class="genius__item genius__item--3 genius__item--clickable"
         id="part-3"
-        source="3"
       ></div>
       <div
         type="button"
@@ -46,17 +42,13 @@
 
     <div id="genius__score">0</div>
 
-
-    <div id="area__error" style="display: none;">
+    <div id="area__error" style="display: none">
+      <div>You got the sequence wrong! Try again!</div>
       <div>
-        You got the sequence wrong! Try again!
+        <button type="button" onclick="restart()">Try again</button>
       </div>
-      <div>
-          <button type="button" onclick="restart()">Try again</button>
-      </div>
-  </div>
+    </div>
 
-  
     <script src="./assets/js/script.js"></script>
   </body>
 </html>
