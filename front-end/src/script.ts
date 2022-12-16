@@ -10,10 +10,14 @@ const parts = [
 ]
 
 const sounds = [
-    new Audio('../build/assets/sounds/sound0.wav'),
-    new Audio('../build/assets/sounds/sound1.wav'),
-    new Audio('../build/assets/sounds/sound2.wav'),
-    new Audio('../build/assets/sounds/sound3.wav'),
+    // new Audio('../build/assets/sounds/sound0.wav'),
+    // new Audio('../build/assets/sounds/sound1.wav'),
+    // new Audio('../build/assets/sounds/sound2.wav'),
+    // new Audio('../build/assets/sounds/sound3.wav'),
+    new Audio('../build/assets/sounds/000.mp3'),
+    new Audio('../build/assets/sounds/001.mp3'),
+    new Audio('../build/assets/sounds/002.mp3'),
+    new Audio('../build/assets/sounds/003.mp3'),
     new Audio('../build/assets/sounds/erro.mp3'),
 ]
 
