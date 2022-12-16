@@ -1,7 +1,7 @@
 {
-    "name": "typescript",
-    "version": "1.0.0",
-    "description": "",
+    "name": "front-end-geniu",
+    "version": "0.0.5",
+    "description": "Academic project - front-end game GENIUS",
     "main": "index.js",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,23 +9,29 @@
       "watch": "yarn tsc --build --watch",
       "js-watch": "nodemon build/js/main.js"
     },
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/tiagosilvainfnet/typescript.git"
-    },
-    "author": "Tiago Silva",
+    "keywords": [
+      "Game",
+      "Classroom",
+      "Javascript",
+      "Typescript",
+      "Node",
+      "Express",
+      "Full-Stack",
+      "Developer",
+      "Front-end",
+      "Developer",
+      "Back-end",
+      "Developer"
+    ],
+    "author": "Francis Targanski",
     "license": "MIT",
-    "bugs": {
-      "url": "https://github.com/tiagosilvainfnet/typescript/issues"
-    },
-    "homepage": "https://github.com/tiagosilvainfnet/typescript#readme",
-    "devDependencies": {
-      "@types/node": "^18.11.9",
-      "typescript": "^4.9.3"
-    },
     "dependencies": {
       "mysql": "^2.18.1",
       "mysql2": "^2.3.3",
       "util": "^0.12.5"
-    }
+    },
+        "devDependencies": {
+      "@types/node": "^18.11.9",
+      "typescript": "^4.9.3"
+    }   
   }
