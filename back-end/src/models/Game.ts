@@ -3,17 +3,12 @@ import { sequelize } from "../db";
 import moment from "moment-timezone";
 import User from "./User";
 
-const Game = sequelize.define("game", {
+const Game = sequelize.define("Game", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
-    },
-    data: {
-        type: DataTypes.NOW,
-        allowNull: false,
-        defaultValue: moment.utc().format('YYYY-MM-DD HH:mm:ss')
     },
     score: {
         type: DataTypes.INTEGER,
@@ -22,13 +17,24 @@ const Game = sequelize.define("game", {
     user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        onDelete: 'RESTRIC',
+        onDelete: 'RESTRICT',
         onUpdate: 'CASCADE',
         references: {
             model: 'users',
             key: 'id'
         }
     },
+    createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+},
+{
+    tableName: 'games'
 })
 
 export default Game

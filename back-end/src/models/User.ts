@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes } from "sequelize";
 import { sequelize } from "../db";
 
-const User = sequelize.define("user", {
+const User = sequelize.define("User", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -26,7 +26,19 @@ const User = sequelize.define("user", {
     password: {
         type: DataTypes.STRING(255),
         allowNull: false,
+    },
+    createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE
+    },
+    updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE
     }
-})
+},
+    {
+        tableName: 'users'
+    }
+)
 
 export default User
