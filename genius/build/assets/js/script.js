@@ -29,7 +29,28 @@ const areaError = document.getElementById("area__error");
 let user = "";
 let positions = [], mPositions = [];
 let ranking = [];
-const tagRanking = document.getElementById("ranking");
+const tagRanking = document.getElementById('ranking');
+const speedVariable = document.getElementById('speed-variable');
+let speed = 1;
+let inputSpeed = document.querySelector('#speed');
+const updateSpeedArea = (speed) => {
+    inputSpeed.value = speed.toString();
+    speedVariable.innerText = speed.toString();
+};
+inputSpeed.addEventListener('change', (event) => {
+    if (event.currentTarget) {
+        const selectedSpeed = event.currentTarget.value;
+        updateSpeedArea(selectedSpeed);
+        window.localStorage.setItem('speed', selectedSpeed);
+    }
+});
+const loadSpeed = () => {
+    const sd = window.localStorage.getItem('speed');
+    if (sd) {
+        speed = parseInt(sd);
+    }
+    updateSpeedArea(speed);
+};
 const toggleRanking = () => {
     let left = tagRanking.style.left;
     if (left === '0px') {
@@ -73,19 +94,27 @@ const alternateParts = (status) => {
 const startGame = () => __awaiter(void 0, void 0, void 0, function* () {
     let userName = document.getElementById('name');
     user = userName.value;
-    userName.value = "";
-    if (score) {
-        score.innerText = "0";
+    if (user !== "") {
+        userName.value = "";
+        if (score) {
+            score.innerText = "0";
+        }
+        if (!startedGame) {
+            startedGame = true;
+            if (btnStart) {
+                btnStart.disabled = true;
+                btnStart.innerHTML = "GAME </br> STARTED";
+                btnStart.style.fontSize = "1.5em";
+                btnStart.style.cursor = "none";
+                alternateParts(false);
+                loadPosition();
+            }
+        }
     }
-    if (!startedGame) {
-        startedGame = true;
+    else {
+        alert("Set yout username to start!");
         if (btnStart) {
-            btnStart.disabled = true;
-            btnStart.innerHTML = "GAME </br> STARTED";
-            btnStart.style.fontSize = "1.5em";
-            btnStart.style.cursor = "none";
-            alternateParts(false);
-            loadPosition();
+            btnStart.disabled = false;
         }
     }
 });
@@ -126,10 +155,10 @@ const setPosition = (idx) => __awaiter(void 0, void 0, void 0, function* () {
                         score.innerText = positions.length;
                     }
                     yield loadPosition();
-                }), 300);
+                }), 300 / speed);
             }
         }
-    }), 1000);
+    }), 300 / speed);
 });
 const iluminatePosition = () => __awaiter(void 0, void 0, void 0, function* () {
     let i = 0;
@@ -141,12 +170,12 @@ const iluminatePosition = () => __awaiter(void 0, void 0, void 0, function* () {
         setTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
             var _b;
             yield ((_b = parts[item]) === null || _b === void 0 ? void 0 : _b.classList.remove(`genius__item--${item}__active`));
-        }), 300);
+        }), 300 / speed);
         i++;
         if (i === positions.length) {
             clearInterval(interval);
         }
-    }), 1500);
+    }), 1200 / speed);
 });
 const defineHeight = () => {
     const elements = document.querySelectorAll(".genius__item");
@@ -170,4 +199,5 @@ window.addEventListener("resize", () => {
 window.addEventListener("load", () => {
     configs();
     loadRanking();
+    loadSpeed();
 });

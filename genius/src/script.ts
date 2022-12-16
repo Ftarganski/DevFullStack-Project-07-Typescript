@@ -23,13 +23,37 @@ const areaError = document.getElementById("area__error");
 let user: any = "";
 let positions: any = [], mPositions: any = [];
 let ranking: Array<any> = [];
-const tagRanking = document.getElementById("ranking") as HTMLElement;
+const tagRanking = document.getElementById('ranking') as HTMLElement;
+const speedVariable = document.getElementById('speed-variable') as HTMLElement
+let speed = 1;
+let inputSpeed = document.querySelector('#speed') as HTMLInputElement;
+
+const updateSpeedArea = (speed: any) => {
+    inputSpeed.value = speed.toString();
+    speedVariable.innerText = speed.toString();
+}
+
+inputSpeed.addEventListener('change', (event: any) => {
+    if (event.currentTarget) {
+        const selectedSpeed = event.currentTarget.value;
+        updateSpeedArea(selectedSpeed);
+        window.localStorage.setItem('speed', selectedSpeed);
+    }
+})
+
+const loadSpeed = () => {
+    const sd = window.localStorage.getItem('speed');
+    if (sd) {
+        speed = parseInt(sd);
+    }
+    updateSpeedArea(speed)
+}
 
 const toggleRanking = () => {
-    let left:any = tagRanking.style.left;
-    if(left === '0px'){
+    let left: any = tagRanking.style.left;
+    if (left === '0px') {
         tagRanking.style.left = '-100%';
-    }else{
+    } else {
         tagRanking.style.left = '0px';
     }
 }
@@ -73,7 +97,8 @@ const alternateParts = (status: boolean) => {
 const startGame = async () => {
     let userName = document.getElementById('name') as HTMLInputElement;
     user = userName.value;
-    userName.value = "";
+    if(user !== ""){
+        userName.value = "";
     if (score) {
         score.innerText = "0";
     }
@@ -86,6 +111,12 @@ const startGame = async () => {
             btnStart.style.cursor = "none";
             alternateParts(false);
             loadPosition();
+        }
+    }
+    }else{
+        alert("Set yout username to start!");
+        if(btnStart){
+            btnStart.disabled = false;
         }
     }
 }
@@ -129,11 +160,11 @@ const setPosition = async (idx: number) => {
                         score.innerText = positions.length;
                     }
                     await loadPosition();
-                }, 300)
+                }, 300 / speed)
             }
 
         }
-    }, 1000)
+    }, 300 / speed)
 }
 
 const iluminatePosition = async () => {
@@ -144,12 +175,12 @@ const iluminatePosition = async () => {
         await parts[item]?.classList.add(`genius__item--${item}__active`)
         setTimeout(async () => {
             await parts[item]?.classList.remove(`genius__item--${item}__active`)
-        }, 300)
+        }, 300 / speed)
         i++;
         if (i === positions.length) {
             clearInterval(interval);
         }
-    }, 1500);
+    }, 1200 / speed);
 }
 
 const defineHeight = () => {
@@ -179,6 +210,7 @@ window.addEventListener("resize", () => {
 window.addEventListener("load", () => {
     configs();
     loadRanking();
+    loadSpeed();
 });
 
 

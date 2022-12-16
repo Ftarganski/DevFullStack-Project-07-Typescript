@@ -8,15 +8,22 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
-    <div>
+    <div class="flex-input">
       <button onclick="toggleRanking()">Ranking</button>
       <button onclick="toggleRanking()">Botão 2</button>
     
     </div>
 
-    <div id="user">
+    <div id="user" class="flex-input">
       <label for="none">Username:</label>
-      <input type="text" id="name" />
+      <input type="text" id="name">
+    </div>
+
+    <div id="velo" class="flex-input">
+      <label for="speed">Speed:</label>
+      <input type="range" id="speed" min="1" max="4" step="1">
+      <span id="speed-variable"></span>
+
     </div>
 
     <div id="ranking" style="left: -100%">
