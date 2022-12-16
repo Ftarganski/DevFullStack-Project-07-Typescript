@@ -3,13 +3,11 @@ import { Router, Request, Response } from "express";
 const auth = Router();
 
 auth.post("/login", async (req: Request, res: Response) => {
-    res.json({ message: "Login" })
+    res.json({ message: "=== LOGIN ===" })
 })
 
 auth.post("/register", async (req: Request, res: Response) => {
-    res.json({ message: "Register" })
+    res.json({ message: "=== REGISTER ===" })
 })
 
-export {
-    auth
-}
+export default auth
