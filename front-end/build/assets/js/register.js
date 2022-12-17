@@ -116,7 +116,7 @@ const register = () => __awaiter(void 0, void 0, void 0, function* () {
             }
         }
         catch (err) {
-            alert('Erro criar usuário');
+            alert('Error creating user');
             console.log(err);
         }
     }

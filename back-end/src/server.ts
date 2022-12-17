@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 route.get("/", (req: Request, res: Response) => {
-    res.json({ message: "===System OK===" })
+    res.json({ message: "=== System OK ===" })
 });
 
 app.use(route);

@@ -10,12 +10,13 @@
   </head>
   <body>
 
-    <a href="./login.html">Login</a>
+    <a href="./login.html" id="btn-in">Login</a>
+    <button onclick="logout()" id="btn-out" style="display: block;margin: 0 auto;">Logout</button>
 
 
     <div class="flex-input">
       <button onclick="toggleRanking(1)">Ranking</button>
-      <button onclick="toggleRanking(2)">My Ranking</button>
+      <button onclick="toggleRanking(2)" id="btn-my-ranking">My Ranking</button>
     </div>
 
     <div id="user" class="flex-input">

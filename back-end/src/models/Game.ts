@@ -1,7 +1,5 @@
-import { Sequelize, DataTypes } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../db";
-import moment from "moment-timezone";
-import User from "./User";
 
 const Game = sequelize.define("Game", {
     id: {
@@ -38,14 +36,3 @@ const Game = sequelize.define("Game", {
 })
 
 export default Game
-
-// REFERENCE DB CREATE TABLE
-
-// CREATE TABLE Game(
-//     id integer NOT NULL AUTO_INCREMENT,
-//     date DATETIME default CURRENT_TIMESTAMP,
-//     score integer NOT null,
-//     user_id integer NOT null,
-//     CONSTRAINT PK_id PRIMARY KEY (id),
-//     CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES user (id)
-// )

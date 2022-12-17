@@ -33,6 +33,10 @@ const tagMyRanking = document.getElementById('my-ranking');
 const speedVariable = document.getElementById('speed-variable');
 let speed = 1;
 let inputSpeed = document.querySelector('#speed');
+const userLogged = getUser();
+const btnIn = document.querySelector('#btn-in');
+const btnOut = document.querySelector('#btn-out');
+const btnMyRanking = document.querySelector('#btn-my-ranking');
 const _get = (endpoint) => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield fetch(`http://localhost:3000/${endpoint}`, {
         method: 'GET'
@@ -87,10 +91,12 @@ const toggleRanking = (type) => {
     }
 };
 const loadRanking = () => __awaiter(void 0, void 0, void 0, function* () {
-    const ranking = yield _get('game/score?order=score,desc');
-    const myRanking = yield _get('game/score/1?order=score,desc');
+    const ranking = yield _get('game/score?order=score,desc&limit=20');
     constructRanking(ranking, tagRanking);
-    constructRanking(myRanking, tagMyRanking);
+    if (isLoggedIn()) {
+        const myRanking = yield _get(`game/score/${userLogged.id}?order=score,desc&limit=20`);
+        constructRanking(myRanking, tagMyRanking);
+    }
 });
 const constructRanking = (item, tag) => {
     let list = `<ul>`;
@@ -102,8 +108,13 @@ const constructRanking = (item, tag) => {
     list += '<ul>';
     tag.children[1].innerHTML = list;
 };
-const updateRanking = () => {
-};
+const updateRanking = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield _post('game/score', {
+        score: scoreVariable,
+        user_id: userLogged.id
+    });
+    loadRanking();
+});
 const configs = () => {
     parts.map((part, idx) => {
         part === null || part === void 0 ? void 0 : part.addEventListener('click', () => setPosition(idx));
@@ -215,6 +226,31 @@ const restartGame = () => {
     }
     startGame();
 };
+const isLoggedIn = () => {
+    const user = window.localStorage.getItem('user');
+    if (user) {
+        btnIn.style.display = 'none';
+        btnOut.style.display = 'block';
+        btnMyRanking.style.display = 'inline-block';
+    }
+    else {
+        btnIn.style.display = 'none';
+        btnOut.style.display = 'block';
+        btnMyRanking.style.display = 'none';
+    }
+    return user;
+};
+const logout = () => {
+    window.localStorage.clear();
+    window.location.replace("http://127.0.0.1:5500/front-end/build/login.html");
+};
+function getUser() {
+    const user = window.localStorage.getItem('user');
+    if (user) {
+        return JSON.parse(user);
+    }
+    return null;
+}
 defineHeight();
 window.addEventListener("resize", () => {
     defineHeight();

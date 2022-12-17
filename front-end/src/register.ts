@@ -107,7 +107,7 @@ const register = async () => {
                 window.location.replace("http://127.0.0.1:5500/front-end/build/login.html");
             }
         }catch(err){
-            alert('Erro criar usuário')
+            alert('Error creating user')
             console.log(err)
         }
         
