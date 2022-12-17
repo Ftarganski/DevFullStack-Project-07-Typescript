@@ -17,10 +17,6 @@ const parts = [
     document.getElementById('part-3'),
 ];
 const sounds = [
-    // new Audio('../build/assets/sounds/sound0.wav'),
-    // new Audio('../build/assets/sounds/sound1.wav'),
-    // new Audio('../build/assets/sounds/sound2.wav'),
-    // new Audio('../build/assets/sounds/sound3.wav'),
     new Audio('../build/assets/sounds/000.mp3'),
     new Audio('../build/assets/sounds/001.mp3'),
     new Audio('../build/assets/sounds/002.mp3'),
@@ -32,11 +28,26 @@ const score = document.getElementById("genius__score");
 const areaError = document.getElementById("area__error");
 let user = "";
 let positions = [], mPositions = [];
-let ranking = [];
 const tagRanking = document.getElementById('ranking');
+const tagMyRanking = document.getElementById('my-ranking');
 const speedVariable = document.getElementById('speed-variable');
 let speed = 1;
 let inputSpeed = document.querySelector('#speed');
+const _get = (endpoint) => __awaiter(void 0, void 0, void 0, function* () {
+    const response = yield fetch(`http://localhost:3000/${endpoint}`, {
+        method: 'GET'
+    });
+    const result = yield response.json();
+    return result;
+});
+const _post = (endpoint, data) => __awaiter(void 0, void 0, void 0, function* () {
+    const response = yield fetch(`http://localhost:3000/${endpoint}`, {
+        method: 'POST',
+        body: data
+    });
+    const result = yield response.json();
+    return result;
+});
 const updateSpeedArea = (speed) => {
     inputSpeed.value = speed.toString();
     speedVariable.innerText = speed.toString();
@@ -55,35 +66,43 @@ const loadSpeed = () => {
     }
     updateSpeedArea(speed);
 };
-const toggleRanking = () => {
-    let left = tagRanking.style.left;
-    if (left === '0px') {
-        tagRanking.style.left = '-100%';
+const toggleRanking = (type) => {
+    if (type === 1) {
+        let position = tagRanking.style.left;
+        if (position === '0px') {
+            tagRanking.style.left = '-100%';
+        }
+        else {
+            tagRanking.style.left = '0px';
+        }
     }
     else {
-        tagRanking.style.left = '0px';
+        let position = tagMyRanking.style.right;
+        if (position === '0px') {
+            tagMyRanking.style.right = '-100%';
+        }
+        else {
+            tagMyRanking.style.right = '0px';
+        }
     }
 };
-const loadRanking = () => {
-    const r = window.localStorage.getItem('ranking');
-    if (r) {
-        ranking = JSON.parse(r);
-    }
+const loadRanking = () => __awaiter(void 0, void 0, void 0, function* () {
+    const ranking = yield _get('game/score?order=score,desc');
+    const myRanking = yield _get('game/score/1?order=score,desc');
+    constructRanking(ranking, tagRanking);
+    constructRanking(myRanking, tagMyRanking);
+});
+const constructRanking = (item, tag) => {
     let list = `<ul>`;
-    for (const rank of ranking) {
+    for (const i of item) {
         list += `
-        <li>${rank.user === "" ? "Anonymous" : rank.user} - ${rank.scoreVariable} </li>
+        <li>${i.user_id} - ${i.score} </li>
         `;
     }
     list += '<ul>';
-    tagRanking.children[1].innerHTML = list;
+    tag.children[1].innerHTML = list;
 };
 const updateRanking = () => {
-    ranking.push({
-        user,
-        scoreVariable
-    });
-    window.localStorage.setItem('ranking', JSON.stringify(ranking));
 };
 const configs = () => {
     parts.map((part, idx) => {

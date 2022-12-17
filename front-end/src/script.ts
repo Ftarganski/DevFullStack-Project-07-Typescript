@@ -10,10 +10,6 @@ const parts = [
 ]
 
 const sounds = [
-    // new Audio('../build/assets/sounds/sound0.wav'),
-    // new Audio('../build/assets/sounds/sound1.wav'),
-    // new Audio('../build/assets/sounds/sound2.wav'),
-    // new Audio('../build/assets/sounds/sound3.wav'),
     new Audio('../build/assets/sounds/000.mp3'),
     new Audio('../build/assets/sounds/001.mp3'),
     new Audio('../build/assets/sounds/002.mp3'),
@@ -26,11 +22,29 @@ const score = document.getElementById("genius__score");
 const areaError = document.getElementById("area__error");
 let user: any = "";
 let positions: any = [], mPositions: any = [];
-let ranking: Array<any> = [];
 const tagRanking = document.getElementById('ranking') as HTMLElement;
+const tagMyRanking = document.getElementById('my-ranking') as HTMLElement;
 const speedVariable = document.getElementById('speed-variable') as HTMLElement
 let speed = 1;
 let inputSpeed = document.querySelector('#speed') as HTMLInputElement;
+
+const _get = async (endpoint: string) => {
+    const response = await fetch(`http://localhost:3000/${endpoint}`, {
+        method: 'GET'
+    });
+    const result = await response.json();
+    return result;
+}
+
+const _post = async (endpoint: string, data: any) => {
+    const response = await fetch(`http://localhost:3000/${endpoint}`, {
+        method: 'POST',
+        body: data
+    });
+    const result = await response.json();
+    return result;
+}
+
 
 const updateSpeedArea = (speed: any) => {
     inputSpeed.value = speed.toString();
@@ -53,37 +67,45 @@ const loadSpeed = () => {
     updateSpeedArea(speed)
 }
 
-const toggleRanking = () => {
-    let left: any = tagRanking.style.left;
-    if (left === '0px') {
-        tagRanking.style.left = '-100%';
+const toggleRanking = (type: number) => {
+    if (type === 1) {
+        let position: any = tagRanking.style.left;
+        if (position === '0px') {
+            tagRanking.style.left = '-100%';
+        } else {
+            tagRanking.style.left = '0px';
+        }
     } else {
-        tagRanking.style.left = '0px';
+        let position: any = tagMyRanking.style.right;
+        if (position === '0px') {
+            tagMyRanking.style.right = '-100%';
+        } else {
+            tagMyRanking.style.right = '0px';
+        }
     }
 }
 
-const loadRanking = () => {
-    const r = window.localStorage.getItem('ranking');
-    if (r) {
-        ranking = JSON.parse(r);
-    }
+const loadRanking = async () => {
+    const ranking = await _get('game/score?order=score,desc');
+    const myRanking = await _get('game/score/1?order=score,desc');
+
+    constructRanking(ranking, tagRanking);
+    constructRanking(myRanking, tagMyRanking);
+}
+
+const constructRanking = (item: any, tag: any) => {
     let list = `<ul>`;
-    for (const rank of ranking) {
+    for (const i of item) {
         list += `
-        <li>${rank.user === "" ? "Anonymous" : rank.user} - ${rank.scoreVariable} </li>
+        <li>${i.user_id} - ${i.score} </li>
         `;
     }
-
     list += '<ul>';
-    tagRanking.children[1].innerHTML = list
+    tag.children[1].innerHTML = list
 }
 
 const updateRanking = () => {
-    ranking.push({
-        user,
-        scoreVariable
-    });
-    window.localStorage.setItem('ranking', JSON.stringify(ranking));
+
 }
 
 const configs = () => {
@@ -101,25 +123,25 @@ const alternateParts = (status: boolean) => {
 const startGame = async () => {
     let userName = document.getElementById('name') as HTMLInputElement;
     user = userName.value;
-    if(user !== ""){
+    if (user !== "") {
         userName.value = "";
-    if (score) {
-        score.innerText = "0";
-    }
-    if (!startedGame) {
-        startedGame = true;
-        if (btnStart) {
-            btnStart.disabled = true;
-            btnStart.innerHTML = "GAME </br> STARTED";
-            btnStart.style.fontSize = "1.5em";
-            btnStart.style.cursor = "none";
-            alternateParts(false);
-            loadPosition();
+        if (score) {
+            score.innerText = "0";
         }
-    }
-    }else{
+        if (!startedGame) {
+            startedGame = true;
+            if (btnStart) {
+                btnStart.disabled = true;
+                btnStart.innerHTML = "GAME </br> STARTED";
+                btnStart.style.fontSize = "1.5em";
+                btnStart.style.cursor = "none";
+                alternateParts(false);
+                loadPosition();
+            }
+        }
+    } else {
         alert("Set yout username to start!");
-        if(btnStart){
+        if (btnStart) {
             btnStart.disabled = false;
         }
     }
