@@ -1,7 +1,5 @@
 var startedGame = false;
-
 const btnStart = document.getElementById('part-4') as HTMLButtonElement | null;
-
 const parts = [
     document.getElementById('part-0'),
     document.getElementById('part-1'),
@@ -20,7 +18,6 @@ const sounds = [
 let scoreVariable = 0;
 const score = document.getElementById("genius__score");
 const areaError = document.getElementById("area__error");
-let user: any = "";
 let positions: any = [], mPositions: any = [];
 const tagRanking = document.getElementById('ranking') as HTMLElement;
 const tagMyRanking = document.getElementById('my-ranking') as HTMLElement;
@@ -31,6 +28,14 @@ const userLogged = getUser();
 const btnIn: any = document.querySelector('#btn-in');
 const btnOut: any = document.querySelector('#btn-out');
 const btnMyRanking: any = document.querySelector('#btn-my-ranking');
+
+inputSpeed.addEventListener('change', (event: any) => {
+    if (event.currentTarget) {
+        const selectedSpeed = event.currentTarget.value;
+        updateSpeedArea(selectedSpeed);
+        window.localStorage.setItem('speed', selectedSpeed);
+    }
+})
 
 const _get = async (endpoint: string) => {
     const response = await fetch(`http://localhost:3000/${endpoint}`, {
@@ -43,8 +48,11 @@ const _get = async (endpoint: string) => {
 const _post = async (endpoint: string, data: any) => {
     const response = await fetch(`http://localhost:3000/${endpoint}`, {
         method: 'POST',
-        body: data
-    });
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
     const result = await response.json();
     return result;
 }
@@ -53,14 +61,6 @@ const updateSpeedArea = (speed: any) => {
     inputSpeed.value = speed.toString();
     speedVariable.innerText = speed.toString();
 }
-
-inputSpeed.addEventListener('change', (event: any) => {
-    if (event.currentTarget) {
-        const selectedSpeed = event.currentTarget.value;
-        updateSpeedArea(selectedSpeed);
-        window.localStorage.setItem('speed', selectedSpeed);
-    }
-})
 
 const loadSpeed = () => {
     const sd = window.localStorage.getItem('speed');
@@ -130,28 +130,18 @@ const alternateParts = (status: boolean) => {
 }
 
 const startGame = async () => {
-    let userName = document.getElementById('name') as HTMLInputElement;
-    user = userName.value;
-    if (user !== "") {
-        userName.value = "";
-        if (score) {
-            score.innerText = "0";
-        }
-        if (!startedGame) {
-            startedGame = true;
-            if (btnStart) {
-                btnStart.disabled = true;
+    if(score){
+        score.innerText = "0";
+    }
+    if(!startedGame){
+        startedGame = true;
+        if(btnStart){
+            btnStart.disabled = true;
                 btnStart.innerHTML = "GAME </br> STARTED";
                 btnStart.style.fontSize = "1.5em";
                 btnStart.style.cursor = "none";
                 alternateParts(false);
                 loadPosition();
-            }
-        }
-    } else {
-        alert("Set yout username to start!");
-        if (btnStart) {
-            btnStart.disabled = false;
         }
     }
 }
@@ -248,7 +238,7 @@ const isLoggedIn = () => {
 
 const logout = () => {
     window.localStorage.clear();
-    window.location.replace("http://127.0.0.1:5500/front-end/build/login.html");
+    window.location.replace("https://genius-game-b67fa.web.app/front-end/build/login.html");
 }
 
 function getUser() {

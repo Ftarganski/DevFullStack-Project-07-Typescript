@@ -18,13 +18,13 @@ const login = async () => {
     alert(result.msg);
     if(response.status === 200){
         window.localStorage.setItem('user', JSON.stringify(result.user));
-        window.location.replace("http://127.0.0.1:5500/front-end/build/index.html");
+        window.location.replace("https://genius-game-b67fa.web.app/front-end/build/index.html");
     }
 }
 
 window.addEventListener('load', () => {
     const user = window.localStorage.getItem('user');
     if(user){
-        window.location.replace("http://127.0.0.1:5500/front-end/build/index.html");
+        window.location.replace("https://genius-game-b67fa.web.app/front-end/build/index.html");
     }
 })

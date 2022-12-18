@@ -104,7 +104,7 @@ const register = async () => {
             const result = await response.json();
             alert(result.msg);
             if(response.status === 201){
-                window.location.replace("http://127.0.0.1:5500/front-end/build/login.html");
+                window.location.replace("https://genius-game-b67fa.web.app/front-end/build/login.html");
             }
         }catch(err){
             alert('Error creating user')
@@ -206,6 +206,6 @@ keys.forEach(key => {
 window.addEventListener('load', () => {
     const user = window.localStorage.getItem('user');
     if(user){
-        window.location.replace("http://127.0.0.1:5500/front-end/build/index.html");
+        window.location.replace("https://genius-game-b67fa.web.app/front-end/build/index.html");
     }
 })
